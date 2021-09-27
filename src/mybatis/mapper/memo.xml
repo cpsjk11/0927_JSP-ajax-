@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="memo">
+
+	<!-- 전체를 가져오는 SELECT!
+		MemoDAO의 getAll()메서드에서 호출한다.
+	 -->
+  <select id="all" resultType="mybatis.vo.MemoVO">
+      select * from memo_t ORDER BY idx DESC
+  </select>
+  
+  <!-- 메모정보를 저장하는 insert -->
+	<insert id="add" parameterType="java.util.Map">
+		INSERT INTO memo_t(idx, writer, content, reg_date, ip) 
+		VALUES(memo_seq.NEXTVAL, #{writer}, #{content}, sysdate, #{ip})
+	</insert>
+	<!-- 기본키를 인자로 받아서 삭제하는 DELETE -->
+	<delete id="del" parameterType="String">
+		DELETE FROM memo_t
+		WHERE idx = #{no}
+	</delete>
+</mapper>
